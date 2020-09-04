@@ -1,1 +1,28 @@
-<h1>Hello CodeWizard</h1>
+
+<div class="container-fluid">
+    $if session['user'] == None:
+        <h1>Hello CodeWizard</h1>
+    $else:
+        <div class="col-md-2">
+            <ul class="list-group sidebar">
+                <li><a href="#" class="list-group-item list-group-item-action active"><span class="fas fa-home"></span> Home Feed</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action border-0"><span class="fas fa-user-circle"></span> Profile</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-envelope"></span> Messages</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-user-friends"></span> Friends</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-users"></span> Communities</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-bell"></span> Notifications</a></li>
+
+                <hr/>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-cog"></span> Settings</a></li>
+                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-question-circle"></span> Help</a></li>
+            </ul>
+        </div>
+        <div class="col-md-6">
+            <div class="post-box">
+                <form class="post-box" id="post-activity">
+                    <textarea name="content" placeholder="What's new, $session['user']['name']?"></textarea>
+                    <button id="post-button" class="btn btn-info" type="submit"><span class="fas fa-share"></span> Post</button>
+                </form>
+            </div>
+        </div>
+</div>

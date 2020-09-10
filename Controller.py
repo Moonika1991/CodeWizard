@@ -1,5 +1,5 @@
 import web
-from Models import RegisterModel, LoginModel
+from Models import RegisterModel, LoginModel, Posts
 
 web.config.debug = False
 
@@ -9,7 +9,9 @@ urls = (
     '/login', 'Login',
     '/logout', 'Logout',
     '/postregistration', 'PostRegistration',
-    '/check-login', 'CheckLogin'
+    '/check-login', 'CheckLogin',
+    '/post-activity', 'PostActivity',
+    '/profile', 'Profile'
 )
 
 app = web.application(urls, globals())
@@ -21,9 +23,21 @@ render = web.template.render("Views/Templates", base="MainLayout", globals={'ses
 
 #Classes/Routes
 
+
 class Home:
     def GET(self):
-        return render.Home()
+        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
+
+        login = LoginModel.LoginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        post_model = Posts.Posts()
+        posts = post_model.get_all_posts()
+
+        return render.Home(posts)
 
 
 class Register:
@@ -58,6 +72,22 @@ class CheckLogin:
             return isCorrect
 
         return "error"
+
+
+class PostActivity:
+    def POST(self):
+        data = web.input()
+        data.username = session_data['user']['username']
+
+        post_model = Posts.Posts()
+        post_model.insert_post(data)
+        return "success"
+
+
+class Profile:
+    def GET(self):
+        return render.Profile()
+
 
 
 class Logout:

@@ -1,6 +1,7 @@
 import pymongo, bcrypt
 from pymongo import MongoClient
 
+
 class LoginModel:
     def __init__(self):
         self.client = MongoClient()

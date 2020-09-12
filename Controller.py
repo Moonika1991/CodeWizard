@@ -86,8 +86,11 @@ class PostActivity:
 
 class Profile:
     def GET(self):
-        return render.Profile()
 
+        post_model = Posts.Posts()
+        posts = post_model.get_all_posts()
+
+        return render.Profile(posts)
 
 
 class Logout:

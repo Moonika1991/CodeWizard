@@ -11,7 +11,7 @@ urls = (
     '/postregistration', 'PostRegistration',
     '/check-login', 'CheckLogin',
     '/post-activity', 'PostActivity',
-    '/profile', 'Profile'
+    '/profile/(.*)', 'UserProfile'
 )
 
 app = web.application(urls, globals())
@@ -84,11 +84,18 @@ class PostActivity:
         return "success"
 
 
-class Profile:
-    def GET(self):
+class UserProfile:
+    def GET(self, user):
+        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
+
+        login = LoginModel.LoginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
 
         post_model = Posts.Posts()
-        posts = post_model.get_all_posts()
+        posts = post_model.get_user_posts(user)
 
         return render.Profile(posts)
 

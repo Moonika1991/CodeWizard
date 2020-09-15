@@ -31,3 +31,5 @@ class Posts:
             print(post)
             post["user"] = self.Users.find_one({"username": post["username"]})
             new_posts.append(post)
+
+        return new_posts

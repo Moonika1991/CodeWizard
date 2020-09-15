@@ -11,12 +11,14 @@ urls = (
     '/postregistration', 'PostRegistration',
     '/check-login', 'CheckLogin',
     '/post-activity', 'PostActivity',
-    '/profile/(.*)', 'UserProfile'
+    '/profile/(.*)', 'UserProfile',
+    '/settings', 'UserSettings'
 )
 
 app = web.application(urls, globals())
 session = web.session.Session(app, web.session.DiskStore("sessions"), initializer={'user': None})
 session_data = session._initializer
+
 
 render = web.template.render("Views/Templates", base="MainLayout", globals={'session': session_data, 'current_user':
                             session_data["user"]})
@@ -98,6 +100,19 @@ class UserProfile:
         posts = post_model.get_user_posts(user)
 
         return render.Profile(posts)
+
+
+class UserSettings:
+    def GET(self):
+        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
+
+        login = LoginModel.LoginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        return render.Settings()
 
 
 class Logout:

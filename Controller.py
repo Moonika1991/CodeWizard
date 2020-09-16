@@ -11,8 +11,10 @@ urls = (
     '/postregistration', 'PostRegistration',
     '/check-login', 'CheckLogin',
     '/post-activity', 'PostActivity',
+    '/profile/(.*)/info', 'UserInfo',
     '/profile/(.*)', 'UserProfile',
-    '/settings', 'UserSettings'
+    '/settings', 'UserSettings',
+    '/update-settings', 'UpdateSettings'
 )
 
 app = web.application(urls, globals())
@@ -102,6 +104,19 @@ class UserProfile:
         return render.Profile(posts)
 
 
+class UserInfo:
+    def GET(self, user):
+        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
+
+        login = LoginModel.LoginModel()
+        isCorrect = login.check_user(data)
+
+        if isCorrect:
+            session_data["user"] = isCorrect
+
+        return render.Info()
+
+
 class UserSettings:
     def GET(self):
         data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
@@ -113,6 +128,18 @@ class UserSettings:
             session_data["user"] = isCorrect
 
         return render.Settings()
+
+
+class UpdateSettings:
+    def POST(self):
+        data = web.input()
+        data.username = session_data["user"]["username"]
+
+        settings_model = LoginModel.LoginModel()
+        if settings_model.update_info(data):
+            return "success"
+        else:
+            return "A fatal error has occurred."
 
 
 class Logout:

@@ -30,14 +30,6 @@ render = web.template.render("Views/Templates", base="MainLayout", globals={'ses
 
 class Home:
     def GET(self):
-        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
-
-        login = LoginModel.LoginModel()
-        isCorrect = login.check_user(data)
-
-        if isCorrect:
-            session_data["user"] = isCorrect
-
         post_model = Posts.Posts()
         posts = post_model.get_all_posts()
 
@@ -61,7 +53,7 @@ class PostRegistration:
         reg_model = RegisterModel.RegisterModel()
         reg_model.insert_user(data)
 
-        return data.username
+        return "success"
 
 
 class CheckLogin:
@@ -90,42 +82,24 @@ class PostActivity:
 
 class UserProfile:
     def GET(self, user):
-        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
-
         login = LoginModel.LoginModel()
-        isCorrect = login.check_user(data)
-
-        if isCorrect:
-            session_data["user"] = isCorrect
+        user_info = login.get_profile(user)
 
         post_model = Posts.Posts()
         posts = post_model.get_user_posts(user)
-
-        return render.Profile(posts)
+        return render.Profile(posts, user_info)
 
 
 class UserInfo:
     def GET(self, user):
-        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
-
         login = LoginModel.LoginModel()
-        isCorrect = login.check_user(data)
+        user_info = login.get_profile(user)
 
-        if isCorrect:
-            session_data["user"] = isCorrect
-
-        return render.Info()
+        return render.Info(user_info)
 
 
 class UserSettings:
     def GET(self):
-        data = type('obj', (object,), {"username": "kolola", "password": "avocado1"})
-
-        login = LoginModel.LoginModel()
-        isCorrect = login.check_user(data)
-
-        if isCorrect:
-            session_data["user"] = isCorrect
 
         return render.Settings()
 

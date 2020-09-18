@@ -13,6 +13,6 @@ class RegisterModel:
         hashed = bcrypt.hashpw(data.password.encode(), bcrypt.gensalt())
 
         uid = self.Users.insert({"username": data.username, "name": data.name, "password": hashed,
-                                "email": data.email})
+                                "email": data.email, "about": "", "birthday": "", "hobbies": ""})
         print(uid)
 

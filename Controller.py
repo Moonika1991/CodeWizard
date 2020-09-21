@@ -1,5 +1,6 @@
 import web
 from Models import RegisterModel, LoginModel, Posts
+import os
 
 web.config.debug = False
 
@@ -13,9 +14,10 @@ urls = (
     '/post-activity', 'PostActivity',
     '/profile/(.*)/info', 'UserInfo',
     '/profile/(.*)', 'UserProfile',
-    '/settings', 'UserSettings',
+    '/settings/(.*)', 'UserSettings',
     '/update-settings', 'UpdateSettings',
-    '/submit-comment', 'SubmitComment'
+    '/submit-comment', 'SubmitComment',
+    '/upload-image/(.*)', 'UploadImage'
 )
 
 app = web.application(urls, globals())
@@ -100,9 +102,11 @@ class UserInfo:
 
 
 class UserSettings:
-    def GET(self):
+    def GET(self, user):
+        login = LoginModel.LoginModel()
+        user_info = login.get_profile(user)
 
-        return render.Settings()
+        return render.Settings(user_info)
 
 
 class UpdateSettings:
@@ -138,6 +142,31 @@ class Logout:
 
         session.kill()
         return "success"
+
+class UploadImage:
+    def POST(self, type):
+        file = web.input(avatar={}, background={})
+        file_dir = os.getcwd() + "/static/uploads/" + session_data['user']['username']
+
+        if not os.path.exists(file_dir):
+            os.mkdir(file_dir)
+
+        if "avatar" or "background" in file:
+            filepath = file[type].filename.replace('\\', '/')
+            filename = filepath.split('/')[-1]
+            f = open(file_dir + '/' + filename, 'wb')
+            f.write(file[type].file.read())
+            f.close()
+
+            update = {}
+            update['type'] = type
+            update["img"] = 'static/uploads/' + session_data['user']['username'] + '/' + filename
+            update['username'] = session_data['user']['username']
+
+            account_model = LoginModel.LoginModel()
+            update_avatar = account_model.update_image(update)
+
+        raise web.seeother("/settings/session_data['user']['username']")
 
 if __name__ == "__main__":
     app.run()

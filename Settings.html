@@ -1,0 +1,89 @@
+
+<div class="container-fluid">
+    <div class="row mh-100 bg-light">
+        <div class="col-md-2">
+        <nav class="navbar h-25">
+            <ul class="navbar-nav">
+                <li class="nav-item nav-item-active"><a href="/" class="nav-link text-secondary"><span class="fas fa-home"></span> Home Feed</a></li>
+                <li class="nav-item"><a href="/profile/$session['user']['username']" class="nav-link text-secondary"><span class="fas fa-user-circle"></span> Profile</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-envelope"></span> Messages</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-user-friends"></span> Friends</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-users"></span> Communities</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-bell"></span> Notifications</a></li>
+
+                <hr/>
+                <li class="nav-item"><a href="/settings" class="nav-link text-secondary"><span class="fas fa-cog"></span> Settings</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-question-circle"></span> Help</a></li>
+            </ul>
+        </nav>
+        </div>
+        <div class="col-md-10">
+            <div class="card border-0 shadow-sm" style="margin: 1rem">
+                <img class="card-img-top img-fluid h-25" src="$session['user']['background']" alt="background">
+                <div class="card-img-overlay d-flex flex-column align-items-end">
+                    <img class="rounded-circle mx-auto" src="$session['user']['avatar']" alt="avatar">
+                    <h4 class="mx-auto text-white"> $session['user']['name']</h4>
+                    <p class="mx-auto text-white">Lv.1 Programmer</p>
+                </div>
+                <div class="card-body">
+                    <a class="card-link" href="#">Activity</a>
+                    <a class="card-link" href="/profile/$session['user']['username']/info">Info</a>
+                    <a class="card-link" href="#">Code</a>
+                    <a class="card-link" href="#">Contact</a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-5">
+                    <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <form id="settings-form">
+                                    <h3>Basic info</h3>
+                                    <span class="font-weight-bold">Name</span>
+                                    <p><input name="name" class="form-control border-top-0 border-right-0 border-left-0" value="$session['user']['name']" /></p>
+                                    <span class="font-weight-bold">About</span>
+                                    <p><textarea name="about" class="form-control border-top-0 border-right-0 border-left-0"> $session['user']['about']</textarea></p>
+                                    <span class="font-weight-bold">Hobbies</span>
+                                    <p><input name="hobbies" class="form-control border-top-0 border-right-0 border-left-0" value="$session['user']['hobbies']" /></p>
+                                    <span class="font-weight-bold">Birthday</span>
+                                    <p><input name="birthday" class="form-control border-top-0 border-right-0 border-left-0" value="$session['user']['birthday']" /></p>
+                                    <button type="submit" class="btn btn-light float-right">Save</button>
+                                </form>
+                            </div>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="card border-0 shadow-sm d-md-block p-2">
+                        <div class="card-body">
+                            <h3>Professional</h3>
+                            <span class="font-weight-bold">Pointy Bracket 2012-2016</span>
+                            <p>I write awesome code for a living.</p>
+                            <span class="font-weight-bold">Udemy 2015-2016</span>
+                            <p>I teach people how to do things for a living.</p>
+                        </div>
+                    </div>
+                    <div class="w-100"></div>
+                    <div class="card border-0 shadow-sm d-md-block p-2 mt-4 mb-4">
+                        <div class="card-body">
+                            <h3>Images</h3>
+                            <form id="avatar-upload" method="POST" enctype="multipart/form-data" action="/upload-image/avatar">
+                                <div class="form-group mb-5">
+                                    <label>Avatar</label>
+                                    <input type="file" name="avatar" class="form-control-file"/>
+                                    <button type="submit" class="btn btn-light">Save</button>
+                                </div>
+                            </form>
+                            <form id="background-upload" method="POST" enctype="multipart/form-data" action="/upload-image/background">
+                                <div class="form-group mt-5">
+                                    <label>Background Image</label>
+                                    <input type="file" name="background" class="form-control-file">
+                                    <button type="submit" class="btn btn-light">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,55 @@
+$def with (posts, user_info)
+
+<div class="container-fluid">
+    <div class="row mh-100 bg-light">
+        <nav class="navbar h-25">
+            <ul class="navbar-nav">
+                <li class="nav-item nav-item-active"><a href="/" class="nav-link text-secondary"><span class="fas fa-home"></span> Home Feed</a></li>
+                <li class="nav-item"><a href="/profile/$user_info['username']" class="nav-link text-secondary"><span class="fas fa-user-circle"></span> Profile</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-envelope"></span> Messages</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-user-friends"></span> Friends</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-users"></span> Communities</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-bell"></span> Notifications</a></li>
+
+                <hr/>
+                <li class="nav-item"><a href="/settings" class="nav-link text-secondary"><span class="fas fa-cog"></span> Settings</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-question-circle"></span> Help</a></li>
+            </ul>
+        </nav>
+        <div class="col-md-10">
+            <div class="card border-0 shadow-sm" style="margin: 1rem">
+                <img class="card-img img-fluid h-25" src="/$user_info['background']" alt="background">
+                <div class="card-img-overlay d-flex flex-column align-items-end">
+                    <img class="rounded-circle mx-auto" src="/$user_info['avatar']" alt="avatar">
+                    <h4 class="mx-auto text-white"> $user_info['name']</h4>
+                    <p class="mx-auto text-white">Lv.1 Programmer</p>
+                </div>
+                <div class="card-body">
+                    <a class="card-link" href="/profile/$user_info['username']">Activity</a>
+                    <a class="card-link" href="/profile/$user_info['username']/info">Info</a>
+                    <a class="card-link" href="#">Code</a>
+                    <a class="card-link" href="#">Contact</a>
+                </div>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-md-7">
+                   $for post in posts:
+                    <div class="w-100"></div>
+                    <div class="card d-md-block p-2 border-0 shadow-sm" style="margin: 1rem">
+                        <div class="card-body">
+                            <h5 class="card-title"><span class="fas fa-user-circle"></span><a href="/profile" class="text-black-50"> $post['user']['name']</a></h5>
+                            <p>
+                                $post['content']
+                            </p>
+                            <div class="btn-group align-bottom" role="group">
+                                <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-thumbs-up"></i></button>
+                                <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-comment-alt"></i></button>
+                                <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-share"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,28 +1,71 @@
+$def with (posts)
 
 <div class="container-fluid">
     $if session['user'] == None:
         <h1>Hello CodeWizard</h1>
     $else:
-        <div class="col-md-2">
-            <ul class="list-group sidebar">
-                <li><a href="#" class="list-group-item list-group-item-action active"><span class="fas fa-home"></span> Home Feed</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action border-0"><span class="fas fa-user-circle"></span> Profile</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-envelope"></span> Messages</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-user-friends"></span> Friends</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-users"></span> Communities</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-bell"></span> Notifications</a></li>
+    <div class="row mh-100 bg-light">
+        <nav class="navbar h-25">
+            <ul class="navbar-nav">
+                <li class="nav-item nav-item-active"><a href="/" class="nav-link text-secondary"><span class="fas fa-home"></span> Home Feed</a></li>
+                <li class="nav-item"><a href="/profile/$session['user']['username']" class="nav-link text-secondary"><span class="fas fa-user-circle"></span> Profile</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-envelope"></span> Messages</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-user-friends"></span> Friends</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-users"></span> Communities</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-bell"></span> Notifications</a></li>
 
                 <hr/>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-cog"></span> Settings</a></li>
-                <li><a href="#" class="list-group-item list-group-item-action"><span class="fas fa-question-circle"></span> Help</a></li>
+                <li class="nav-item"><a href="/settings" class="nav-link text-secondary"><span class="fas fa-cog"></span> Settings</a></li>
+                <li class="nav-item"><a href="#" class="nav-link text-secondary"><span class="fas fa-question-circle"></span> Help</a></li>
             </ul>
-        </div>
-        <div class="col-md-6">
-            <div class="post-box">
-                <form class="post-box" id="post-activity">
-                    <textarea name="content" placeholder="What's new, $session['user']['name']?"></textarea>
-                    <button id="post-button" class="btn btn-info" type="submit"><span class="fas fa-share"></span> Post</button>
-                </form>
+        </nav>
+        <div class="col" id="content">
+            <div id="posts" class="col-md-6">
+                <div class="card d-md-block p-2 border-0 shadow-sm" style="margin: 1rem">
+                    <form id="post-activity" class="card-body" style="padding-top: 0; padding-left: 0; padding-right: 0">
+                        <textarea name="content" class="form-control border-0" rows="5" placeholder="What's new, $session['user']['name']?"></textarea>
+                        <button id="post-button" class="card-link btn btn-info text-white" type="submit"><span class="fas fa-share"></span> Post</button>
+                    </form>
+                </div>
+                $for post in posts:
+                <div class="w-100"></div>
+                <div class="card d-md-block p-2 border-0 shadow-sm" style="margin: 1rem">
+                    <div class="card-body">
+                        <div class="card-title">
+                            <h5>
+                                <span class="fas fa-user-circle"></span>
+                                <a href="/profile/$post['username']" class="text-body"> $post['user']['name']</a>
+                            </h5>
+                            <span class="text-muted small">Posted $post['timestamp']</span>
+                        </div>
+                        <p class="card-text">
+                            $post['content']
+                        </p>
+                        <div class="btn-group align-bottom m-2" role="group">
+                            <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-thumbs-up"></i></button>
+                            <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-comment-alt"></i></button>
+                            <button type="submit" class="btn bg-light shadow-sm rounded-circle m-1 text-secondary"><i class="fas fa-share"></i></button>
+                        </div>
+                        <div class="card m-2 border-0">
+                            $for comment in post["comments"]:
+                                <div class="card-body d-md-block p-2 bg-light m-1 border-0 shadow-sm">
+                                    <span class="float-right text-muted small">$comment['timestamp']</span>
+                                    <a href="/profile/$comment['username']" class="text-dark"><span class="fas fa-user-circle m-1"></span>$comment['user']['name']</a><br />
+                                    <p class="p-2 small">$comment["comment-text"]</p>
+                                </div>
+                                <div class="w-100"></div>
+                            <div class="card-body bg-light m-1 border-0 shadow-sm">
+                                <h5><span class="fas fa-user-circle"></span></h5>
+                                <form class="comment-form">
+                                    <input name="post_id" class="invisible" value="$post['_id']" />
+                                    <textarea name="comment-text" class="form-control border-0 bg-light" placeholder="Write a comment"></textarea>
+                                    <button type="submit" class="btn btn-info float-right m-1">Add Comment</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </div>
 </div>

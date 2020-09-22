@@ -1,19 +1,13 @@
 .navbar-color {
-    background-color: #33ccff;
+    background-color: #1d85c4;
 }
 
 .sidebar {
     list-style-type: none;
-    border: none !important;
+    border: 0;
 }
 
-.list-group li:nth-child(1){
-  border-top: 0 none;
+#post-button{
+    float: right;
 }
 
-.post-box {
-    width: 300px;
-    border: 15px solid green;
-    padding: 50px;
-    margin: 20px;
-}

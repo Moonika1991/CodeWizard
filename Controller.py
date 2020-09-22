@@ -14,7 +14,7 @@ urls = (
     '/post-activity', 'PostActivity',
     '/profile/(.*)/info', 'UserInfo',
     '/profile/(.*)', 'UserProfile',
-    '/settings/(.*)', 'UserSettings',
+    '/settings', 'UserSettings',
     '/update-settings', 'UpdateSettings',
     '/submit-comment', 'SubmitComment',
     '/upload-image/(.*)', 'UploadImage'
@@ -102,11 +102,9 @@ class UserInfo:
 
 
 class UserSettings:
-    def GET(self, user):
-        login = LoginModel.LoginModel()
-        user_info = login.get_profile(user)
+    def GET(self):
 
-        return render.Settings(user_info)
+        return render.Settings()
 
 
 class UpdateSettings:
@@ -166,7 +164,7 @@ class UploadImage:
             account_model = LoginModel.LoginModel()
             update_avatar = account_model.update_image(update)
 
-        raise web.seeother("/settings/session_data['user']['username']")
+        raise web.seeother("/settings")
 
 if __name__ == "__main__":
     app.run()
